@@ -50,17 +50,20 @@ class _cartState extends State<cart> {
                                     ),
                                     Padding(padding: EdgeInsets.only(top: 10)),
                                     SizedBox(
-                                        height: 200,
-                                        child: ListView.builder(
+                                        height: 300,
+                                        child: GridView.builder(
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2),
                                           itemBuilder: (context, index) {
                                             return SizedBox(
-                                                height: 130,
-                                                width: 130,
+                                                height:80,
+                                                width: 80,
                                                 child: Card(
                                                   child: Column(
                                                     children: [
                                                       Image.asset('images/pizza-png-15.png'),
-                                                      Text('$index')
+                                                      Text('$index'),                
                                                     ],
                                                   ),
                                                 ));
