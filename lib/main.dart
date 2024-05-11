@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pixzzaapp/HomePage.dart';
+import 'package:pixzzaapp/Provider/LikesProv.dart';
 import 'package:pixzzaapp/navigationcustom.dart';
+import 'package:provider/provider.dart';
 // import 'package:flutter_native_splash/flutter_native_splash.dart';
 // import 'package:flutter_native_splash/flutter_native_splash.dart';
 void main() {
@@ -16,7 +18,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_)=>LikesProv())
+    ],
+    child:
+    MaterialApp(
+
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -31,6 +38,6 @@ class MyApp extends StatelessWidget {
         // Other routes...
       },
       home: navigationcustom(),
-    );
+    ));
   }
 }

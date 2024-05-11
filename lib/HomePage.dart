@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_avif/flutter_avif.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pixzzaapp/Provider/HomeProv.dart';
 import 'package:pixzzaapp/order.dart';
 import 'package:pixzzaapp/cart.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -23,63 +24,64 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<PizzaDetails> pd = <PizzaDetails>[
-    PizzaDetails(
-        'images/pizza-png-15.png',
-        'Canadian Pizza',
-        'The "Canadian pizza" toppings typically include tomato sauce, mozzarella cheese, side bacon, pepperoni, and mushrooms',
-        Color.fromARGB(255, 250, 255, 190),
-        35),
-    PizzaDetails(
-        'images/pizza-png-15.png',
-        'Mushrooms-olives',
-        'This delicious mushroom pizza is smothered in sautéed mushrooms, onions and garlic, and layers of mozzarella and fresh-grated parmesan',
-        Color.fromRGBO(206, 255, 206, 1),
-        60),
-    PizzaDetails(
-        'images/pizza-png-15.png',
-        'Mushrooms-olives',
-        'This delicious mushroom pizza is smothered in sautéed mushrooms, onions and garlic, and layers of mozzarella and fresh-grated parmesan',
-        Color.fromRGBO(206, 255, 206, 1),
-        20),
-    PizzaDetails(
-        'images/pizza-png-15.png',
-        'Onion Chesse Pizza',
-        'The wholesome pizza base is topped up with crunchy vegetables along with mozzarella cheese and is baked to perfection to tantalize your taste buds.',
-        Color.fromARGB(255, 167, 211, 234),
-        23),
-    PizzaDetails(
-        'images/pizza-png-15.png',
-        'Tandoori Paneer Pizza',
-        'Savor the perfect fusion of smoky tandoori flavors and succulent paneer on our exquisite Tandoori Paneer Pizza, where traditional Indian spices meet the cheesy delight of a classic pizza crust',
-        Color.fromARGB(255, 249, 218, 254),
-        57),
-    PizzaDetails(
-        'images/pizza-png-15.png',
-        'FarmHouse Pizza',
-        'Indulge in the rustic charm of our Farmhouse Pizza, featuring a medley of fresh, farm-to-table ingredients atop a golden crust, delivering a savory symphony of flavors straight from the heart of the countryside',
-        Color.fromARGB(255, 186, 255, 199),
-        76),
-    // PizzaDetails('images/sweetcorn.png', 'Sweet Corn Pizza', ''),
-    PizzaDetails(
-        'images/pizza-png-15.png',
-        'Veg BabyCorn Pizza',
-        'Experience a burst of freshness with our Veg Baby Corn Pizza, where crisp baby corn, vibrant vegetables, and gooey cheese unite on a perfectly baked crust, creating a delightful symphony of flavors',
-        Color.fromRGBO(255, 249, 196, 1),
-        20),
-    PizzaDetails(
-        'images/pizza-png-15.png',
-        'Veg BabyCorn Pizza',
-        'Experience a burst of freshness with our Veg Baby Corn Pizza, where crisp baby corn, vibrant vegetables, and gooey cheese unite on a perfectly baked crust, creating a delightful symphony of flavors',
-        Color.fromARGB(255, 167, 211, 234),
-        63),
-    PizzaDetails(
-        'images/pizza-png-15.png',
-        'Veg BabyCorn Pizza',
-        'Experience a burst of freshness with our Veg Baby Corn Pizza, where crisp baby corn, vibrant vegetables, and gooey cheese unite on a perfectly baked crust, creating a delightful symphony of flavors',
-        Color.fromRGBO(255, 196, 207, 1),
-        45),
-  ];
+  HomeProv hp = HomeProv();
+  // List<PizzaDetails> pd = <PizzaDetails>[
+  // PizzaDetails(
+  //     'images/pizza-png-15.png',
+  //     'Canadian Pizza',
+  //     'The "Canadian pizza" toppings typically include tomato sauce, mozzarella cheese, side bacon, pepperoni, and mushrooms',
+  //     Color.fromARGB(255, 250, 255, 190),
+  //     35),
+  // PizzaDetails(
+  //     'images/pizza-png-15.png',
+  //     'Mushrooms-olives',
+  //     'This delicious mushroom pizza is smothered in sautéed mushrooms, onions and garlic, and layers of mozzarella and fresh-grated parmesan',
+  //     Color.fromRGBO(206, 255, 206, 1),
+  //     60),
+  // PizzaDetails(
+  //     'images/pizza-png-15.png',
+  //     'Mushrooms-olives',
+  //     'This delicious mushroom pizza is smothered in sautéed mushrooms, onions and garlic, and layers of mozzarella and fresh-grated parmesan',
+  //     Color.fromRGBO(206, 255, 206, 1),
+  //     20),
+  // PizzaDetails(
+  //     'images/pizza-png-15.png',
+  //     'Onion Chesse Pizza',
+  //     'The wholesome pizza base is topped up with crunchy vegetables along with mozzarella cheese and is baked to perfection to tantalize your taste buds.',
+  //     Color.fromARGB(255, 167, 211, 234),
+  //     23),
+  // PizzaDetails(
+  //     'images/pizza-png-15.png',
+  //     'Tandoori Paneer Pizza',
+  //     'Savor the perfect fusion of smoky tandoori flavors and succulent paneer on our exquisite Tandoori Paneer Pizza, where traditional Indian spices meet the cheesy delight of a classic pizza crust',
+  //     Color.fromARGB(255, 249, 218, 254),
+  //     57),
+  // PizzaDetails(
+  //     'images/pizza-png-15.png',
+  //     'FarmHouse Pizza',
+  //     'Indulge in the rustic charm of our Farmhouse Pizza, featuring a medley of fresh, farm-to-table ingredients atop a golden crust, delivering a savory symphony of flavors straight from the heart of the countryside',
+  //     Color.fromARGB(255, 186, 255, 199),
+  //     76),
+  // // PizzaDetails('images/sweetcorn.png', 'Sweet Corn Pizza', ''),
+  // PizzaDetails(
+  //     'images/pizza-png-15.png',
+  //     'Veg BabyCorn Pizza',
+  //     'Experience a burst of freshness with our Veg Baby Corn Pizza, where crisp baby corn, vibrant vegetables, and gooey cheese unite on a perfectly baked crust, creating a delightful symphony of flavors',
+  //     Color.fromRGBO(255, 249, 196, 1),
+  //     20),
+  // PizzaDetails(
+  //     'images/pizza-png-15.png',
+  //     'Veg BabyCorn Pizza',
+  //     'Experience a burst of freshness with our Veg Baby Corn Pizza, where crisp baby corn, vibrant vegetables, and gooey cheese unite on a perfectly baked crust, creating a delightful symphony of flavors',
+  //     Color.fromARGB(255, 167, 211, 234),
+  //     63),
+  // PizzaDetails(
+  //     'images/pizza-png-15.png',
+  //     'Veg BabyCorn Pizza',
+  //     'Experience a burst of freshness with our Veg Baby Corn Pizza, where crisp baby corn, vibrant vegetables, and gooey cheese unite on a perfectly baked crust, creating a delightful symphony of flavors',
+  //     Color.fromRGBO(255, 196, 207, 1),
+  //     45),
+  // ];
 // int _selectedIndex = 0;
 //     void _onItemTapped(int index) {
 //     setState(() {
@@ -215,7 +217,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       TextButton(
                           onPressed: () {
-                            print(pd.length);
+                            print(hp.pd.length);
                           },
                           child: Text(
                             'Salad',
@@ -279,7 +281,7 @@ class _HomePageState extends State<HomePage> {
                             ? SizedBox(
                                 height: 300,
                                 child: Card(
-                                    color: pd[index].Ccolor,
+                                    color: hp.pd[index].Ccolor,
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(
                                           vertical: 0, horizontal: 20),
@@ -292,7 +294,7 @@ class _HomePageState extends State<HomePage> {
                                                   top: 12, bottom: 7),
                                               child: Image(
                                                 image: AssetImage(
-                                                    pd[index].Pimage),
+                                                    hp.pd[index].Pimage),
                                                 height: 120,
                                                 width: 120,
                                               ),
@@ -300,7 +302,7 @@ class _HomePageState extends State<HomePage> {
                                             Expanded(
                                                 child: SizedBox(
                                                     child: Text(
-                                              '${pd[index].Pname}',
+                                              '${hp.pd[index].Pname}',
                                               style: GoogleFonts.poppins(
                                                   fontSize: 15,
                                                   color: Color.fromARGB(
@@ -308,7 +310,7 @@ class _HomePageState extends State<HomePage> {
                                                   fontWeight: FontWeight.w600),
                                             ))),
                                             Text(
-                                              '${pd[index].Pdesp}',
+                                              '${hp.pd[index].Pdesp}',
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
@@ -327,14 +329,15 @@ class _HomePageState extends State<HomePage> {
                                                       builder: (BuildContext
                                                               context) =>
                                                           order(
-                                                            Pname:
-                                                                pd[index].Pname,
-                                                            Pdesp:
-                                                                pd[index].Pdesp,
-                                                            Pimage: pd[index]
-                                                                .Pimage,
-                                                            Pprice:
-                                                                pd[index].price,
+                                                            index:index
+                                                            // Pname:
+                                                            //     hp.pd[index].Pname,
+                                                            // Pdesp:
+                                                            //    hp.pd[index].Pdesp,
+                                                            // Pimage:hp. pd[index]
+                                                            //     .Pimage,
+                                                            // Pprice:
+                                                            //    hp. pd[index].price,
                                                           )),
                                                 );
                                               },
@@ -360,7 +363,7 @@ class _HomePageState extends State<HomePage> {
                                         255, 255, 161, 192)),
                               );
                       },
-                      itemCount: pd.length,
+                      itemCount: hp.pd.length,
                     ),
                   ),
                   // SingleChildScrollView(child:

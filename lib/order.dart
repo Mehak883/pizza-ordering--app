@@ -3,7 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:carousel_indicator/carousel_indicator.dart';
+import 'package:pixzzaapp/Provider/LikesProv.dart';
+import 'package:pixzzaapp/cart.dart';
+import 'package:provider/provider.dart';
+// import 'package:carousel_indicator/carousel_indicator.dart';
 
 // import 'package:cupertino_icons/cupertino_icons.dart';
 
@@ -35,7 +38,6 @@ class _orderState extends State<order> {
     spizza = Pprice;
     mpizza = (Pprice * 2) - 5;
     lpizza = (Pprice * 3) - 15;
-
     price = Pprice;
   }
   String Pname;
@@ -68,7 +70,7 @@ class _orderState extends State<order> {
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsets.only(top: 20, right: 15, left: 15),
+                          const EdgeInsets.only(top: 10, right: 15, left: 15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -84,7 +86,13 @@ class _orderState extends State<order> {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          cart()));
+                            },
                             icon: SvgPicture.asset(
                               'images/shopping-bag.svg',
                               height: 30,
@@ -133,7 +141,7 @@ class _orderState extends State<order> {
                       )
                     ]),
                     SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -236,11 +244,11 @@ class _orderState extends State<order> {
                     const SizedBox(
                       height: 7,
                     ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(top: 10, right: 20, left: 30),
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
+                    SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(top: 10, right: 20, left: 30),
                         child: SizedBox(
                           height: 70,
                           child: Text(
@@ -251,6 +259,7 @@ class _orderState extends State<order> {
                               // fontWeight: FontWeight.w800,
                             ),
                             overflow: TextOverflow.fade,
+                            // maxLines: 3,
                           ),
                         ),
                       ),
@@ -404,73 +413,108 @@ class _orderState extends State<order> {
                     SizedBox(
                       height: 30,
                     ),
+                    // SizedBox(width: 370,height: 55,child: ElevatedButton(onPressed: (){}, child: Text('Add to cart', textAlign: TextAlign.center,
+                    //       style: GoogleFonts.poppins(
+                    //           fontSize: 20, color: Colors.white),)),),
                     SizedBox(
                       width: 370,
                       height: 55,
-                      child: AddToCartButton(
-                        // trolley: SvgPicture.asset(
-                        //   'images/shopping-bag.svg',
-                        //   width: 24,
-                        //   height: 24,
-                        //   color: Color.fromARGB(255, 255, 255, 255),
-                        // ),
-                        trolley: Icon(Icons.shopping_cart_outlined,color: Colors.white,
-                        size: 25,),
-                        text: Text(
-                          'Add to cart',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
-                              fontSize: 20, color: Colors.white),
-                          maxLines: 1,
-                          overflow: TextOverflow.fade,
-                        ),
-                        check: SizedBox(
-                          width: 48,
-                          height: 48,
-                          child: Icon(
-                            Icons.check,
-                            color: Colors.white,
-                            size: 24,
+                      //   child: AddToCartButton(
+                      //     // trolley: SvgPicture.asset(
+                      //     //   'images/shopping-bag.svg',
+                      //     //   width: 24,
+                      //     //   height: 24,
+                      //     //   color: Color.fromARGB(255, 255, 255, 255),
+                      //     // ),
+                      //     trolley: Icon(
+                      //       Icons.shopping_cart_outlined,
+                      //       color: Colors.white,
+                      //       size: 25,
+                      //     ),
+                      //     text: Text(
+                      //       'Add to cart',
+                      //       textAlign: TextAlign.center,
+                      //       style: GoogleFonts.poppins(
+                      //           fontSize: 20, color: Colors.white),
+                      //       maxLines: 1,
+                      //       overflow: TextOverflow.fade,
+                      //     ),
+                      //     check: SizedBox(
+                      //       width: 48,
+                      //       height: 48,
+                      //       child: Icon(
+                      //         Icons.check,
+                      //         color: Colors.white,
+                      //         size: 24,
+                      //       ),
+                      //     ),
+                      //     borderRadius: BorderRadius.circular(30),
+                      //     backgroundColor: Color.fromARGB(255, 65, 48, 79),
+                      //     onPressed: (id) {
+                      //       if (id == AddToCartButtonStateId.idle) {
+                      //         //handle logic when pressed on idle state button.
+                      //         setState(() {
+                      //           stateId = AddToCartButtonStateId.loading;
+                      //           Future.delayed(Duration(seconds: 3), () {
+                      //             setState(() {
+                      //               stateId = AddToCartButtonStateId.done;
+                      //             });
+                      //           });
+                      //         });
+                      //       } else if (id == AddToCartButtonStateId.done) {
+                      //         //handle logic when pressed on done state button.
+                      //         setState(() {
+                      //           stateId = AddToCartButtonStateId.idle;
+                      //         });
+                      //       }
+                      //       cart.cartItems.add([
+                      //         Pname,
+                      //         Pimage,
+                      //         Pdesp,
+                      //         Pprice * quantity,
+                      //         quantity
+                      //       ]);
+                      //     },
+                      //     stateId: stateId,
+                      //   ),
+                      // )
+                      child: ElevatedButton(
+                          onPressed: () {
+                            cart.cartItems.add([
+                              Pname,
+                              Pimage,
+                              Pdesp,
+                              Pprice * quantity,
+                              quantity
+                            ]);
+                            setState(() {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                      backgroundColor: Colors.green,
+                                      content: Text(
+                                        "Item Added Successfully 🙂",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: 'Urbanist-Italic'),
+                                      )));
+                              // ););
+                            });
+                          },
+                          child: Text(
+                            'Add to Cart',
+                            style: GoogleFonts.poppins(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500),
                           ),
-                        ),
-                        borderRadius: BorderRadius.circular(30),
-                        backgroundColor: Color.fromARGB(255, 65, 48, 79),
-                        onPressed: (id) {
-                          if (id == AddToCartButtonStateId.idle) {
-                            //handle logic when pressed on idle state button.
-                            setState(() {
-                              stateId = AddToCartButtonStateId.loading;
-                              Future.delayed(Duration(seconds: 3), () {
-                                setState(() {
-                                  stateId = AddToCartButtonStateId.done;
-                                });
-                              });
-                            });
-                          } else if (id == AddToCartButtonStateId.done) {
-                            //handle logic when pressed on done state button.
-                            setState(() {
-                              stateId = AddToCartButtonStateId.idle;
-                            });
-                          }
-                        },
-                        stateId: stateId,
-                      ),
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 130),
+                            backgroundColor: Color.fromARGB(255, 65, 48, 79),
+                          )),
                     )
-
-                    // ElevatedButton(
-                    //     onPressed: () {},
-                    //     child: Text(
-                    //       'Add to Cart',
-                    //       style: GoogleFonts.poppins(
-                    //           fontSize: 18,
-                    //           color: Colors.white,
-                    //           fontWeight: FontWeight.w500),
-                    //     ),
-                    //     style: ElevatedButton.styleFrom(
-                    //       padding: EdgeInsets.symmetric(
-                    //           vertical: 15, horizontal: 130),
-                    //       backgroundColor: Color.fromARGB(255, 65, 48, 79),
-                    //     )),
                   ],
                 ),
               ),
@@ -508,7 +552,7 @@ class _orderState extends State<order> {
           ),
           //  SizedBox(height: 0,),
           Positioned(
-              top: 350,
+              top: 360,
               left: 157,
               child: SizedBox(
                   height: 4,
@@ -549,31 +593,33 @@ class _orderState extends State<order> {
               // ),
               ),
           Positioned(
-            // top: 0,
-            left: 260,
-            bottom: 398,
-            right: 10,
-
-            child: GestureDetector(
-              onTap: () {},
-              child: Container(
-                height: 55,
-                width: 55,
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color.fromARGB(255, 65, 48, 79)),
-                child: Center(
-                    child: SvgPicture.asset(
-                  "images/fav.svg",
-                  height: 25,
-                  width: 25,
-                  color: Colors.white,
-                )
-                    // fit: BoxFit.contain,
-                    ),
-              ),
-            ),
-          )
+              // top: 0,
+              left: 260,
+              bottom: 445,
+              right: 10,
+              child: Consumer<LikesProv>(builder: (context, value, child) {
+                return GestureDetector(
+                  onTap: () {
+                    
+                  },
+                  child: Container(
+                    height: 55,
+                    width: 55,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color.fromARGB(255, 65, 48, 79)),
+                    child: Center(
+                        child: SvgPicture.asset(
+                      "images/fav.svg",
+                      height: 25,
+                      width: 25,
+                      color: Colors.white,
+                    )
+                        // fit: BoxFit.contain,
+                        ),
+                  ),
+                );
+              }))
         ],
       ),
     );

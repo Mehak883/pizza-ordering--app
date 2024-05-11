@@ -1,9 +1,8 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:searchfield/searchfield.dart';
 import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
+import 'package:pixzzaapp/Provider/LikesProv.dart';
 // class Search extends StatefulWidget {
 //   const Search({super.key});
 
@@ -59,7 +58,7 @@ import 'package:material_floating_search_bar_2/material_floating_search_bar_2.da
 // }
 
 class Search extends StatefulWidget {
-  const Search({super.key});
+  Search({super.key});
 
   @override
   State<Search> createState() => _SearchState();
@@ -191,121 +190,142 @@ class _SearchState extends State<Search> {
                               height: 10,
                             ),
                             SizedBox(
-                              height: 300,
-                              width: 510,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: 4,
-                                itemBuilder: (BuildContext context, index) {
-                                  // var data = itemlist.items[index];
-                                 
+                                height: 300,
+                                width: 510,
+                                child: Consumer<LikesProv>(
+                                    builder: (context, value, child) {
+                                  return ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: value.favItem.length,
+                                    itemBuilder: (BuildContext context, index) {
+                                      // var data = itemlist.items[index];
 
-                                  return Card(
-                                    color: Colors.white,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 0),
-                                      child: SizedBox(
-                                        width: 200,
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                              height: 15,
-                                            ),
-                                            SizedBox(
-                                                height: 150,
-                                                child: Hero(
-                                                    tag: index,
-                                                    child: Image.asset(
-                                                        searchitems[index]
-                                                            [0]))),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 5, right: 5, left: 5),
-                                              child: Text(
-                                                searchitems[index][1],
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 18,
-                                                  color: Color.fromARGB(
-                                                      255, 65, 48, 79),
-                                                  fontWeight: FontWeight.w600,
+                                      return Card(
+                                        color: Colors.white,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 0),
+                                          child: SizedBox(
+                                            width: 200,
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                  height: 15,
                                                 ),
-                                                maxLines: 1,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  10, 10, 10, 0),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    '\$${searchitems[index][2]}',
+                                                SizedBox(
+                                                    height: 150,
+                                                    child: Hero(
+                                                        tag: index,
+                                                        child: Image.asset(
+                                                            value.favItem[index]
+                                                                [0]))),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 5,
+                                                          right: 5,
+                                                          left: 5),
+                                                  child: Text(
+                                                    value.favItem[index][1],
                                                     style: GoogleFonts.poppins(
-                                                        fontSize: 20,
-                                                        color: Colors.black),
-                                                  ),
-                                               GestureDetector(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        searchitems[index][3] =
-                                                            !searchitems[index]
-                                                                [3];
-                                                      });
-                                                    },
-                                                    child: Icon(
-                                                      searchitems[index][3]
-                                                          ? Icons
-                                                              .favorite_rounded
-                                                          : Icons
-                                                              .favorite_outline_rounded,
-                                                      size: 22,
-                                                      color: searchitems[index][3]
-                                                          ? Colors.red
-                                                          : Colors.black,
+                                                      fontSize: 18,
+                                                      color: Color.fromARGB(
+                                                          255, 65, 48, 79),
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                     ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                                padding: EdgeInsets.only(
-                                                    top: 0),
-                                                child: ElevatedButton(
-                                                    onPressed: () {},
-                                                    style: ElevatedButton
-                                                        .styleFrom(
+                                                    maxLines: 1,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      10, 10, 10, 0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        '\$${value.favItem[index][2]}',
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                fontSize: 20,
+                                                                color: const Color
+                                                                    .fromRGBO(0,
+                                                                    0, 0, 1)),
+                                                      ),
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            // if(value.favItem.contains(index)==true){
+
+                                                            // }
+                                                            if (value.favItem[
+                                                                    index][3] ==
+                                                                true) {
+                                                              value.dislikeItem(
+                                                                  index);
+                                                            } else {
+                                                              value.likeItem(
+                                                                  index);
+                                                            }
+                                                            print(value.favItem);
+                                                            
+                                                            
+                                                           });
+                                                          // print(widget.favItem);
+                                                        },
+                                                        child: Icon(
+                                                          value.favItem[index]
+                                                                  [3]
+                                                              ? Icons
+                                                                  .favorite_rounded
+                                                              : Icons
+                                                                  .favorite_outline_rounded,
+                                                          size: 22,
+                                                          color: value.favItem[
+                                                                  index][3]
+                                                              ? Colors.red
+                                                              : Colors.black,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                    padding:
+                                                        EdgeInsets.only(top: 0),
+                                                    child: ElevatedButton(
+                                                        onPressed: () {},
+                                                        style: ElevatedButton.styleFrom(
                                                             backgroundColor:
-                                                                Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        65,
-                                                                        48,
-                                                                        79),
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    65,
+                                                                    48,
+                                                                    79),
                                                             padding: EdgeInsets
                                                                 .symmetric(
                                                                     horizontal:
                                                                         30,
                                                                     vertical:
                                                                         0)),
-                                                    child: Text(
-                                                      'Order Now',
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 15),
-                                                    ))),
-                                          ],
+                                                        child: Text(
+                                                          'Order Now',
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 15),
+                                                        ))),
+                                              ],
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
+                                      );
+                                    },
                                   );
-                                },
-                              ),
-                            ),
+                                })),
                           ]))
                 ],
               )),
@@ -317,10 +337,12 @@ class _SearchState extends State<Search> {
   }
 
   Widget buildFloatingSearchBar() {
+    FloatingSearchBarController _srchcont = FloatingSearchBarController();
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
 
     return FloatingSearchBar(
+      controller: _srchcont,
       hint: 'Search...',
       scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
       transitionDuration: const Duration(milliseconds: 800),
@@ -334,21 +356,23 @@ class _SearchState extends State<Search> {
       width: isPortrait ? 370 : 500,
       debounceDelay: const Duration(milliseconds: 500),
       onQueryChanged: (query) {
-        // print('hi')
+        print(_srchcont.query);
       },
 
       transition: CircularFloatingSearchBarTransition(),
       actions: [
         FloatingSearchBarAction(
-          showIfOpened: false,
+          showIfOpened: true,
           child: CircularButton(
             icon: const Icon(Icons.search),
-            onPressed: () {},
+            onPressed: () {
+              print(_srchcont);
+            },
           ),
         ),
-        FloatingSearchBarAction.searchToClear(
-          showIfClosed: false,
-        ),
+        // FloatingSearchBarAction.searchToClear(
+        //   showIfClosed: false,
+        // ),
       ],
       builder: (context, transition) {
         return ClipRRect(
@@ -359,39 +383,47 @@ class _SearchState extends State<Search> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: searchitems.map((oneitem) {
-                return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                    child: Container(
-                      height: 52,
-                      color: Colors.white,
-                      child: Row(children: [
-                        Image.asset(
-                          oneitem[0],
-                          width: 40,
-                          height: 40,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        SizedBox(
-                          width: 220,
-                          child: Text(
-                            oneitem[1],
-                            style: GoogleFonts.poppins(),
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _srchcont.query = oneitem[1];
+                    });
+                  },
+                  child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                      child: Container(
+                        height: 52,
+                        color: Colors.white,
+                        child: Row(children: [
+                          Image.asset(
+                            oneitem[0],
+                            width: 40,
+                            height: 40,
                           ),
-                        ),
-                        SizedBox(
-                          width: 30,
-                        ),
-                        IconButton(
-                            onPressed: () {
-                              setState(() {
-                                searchitems.remove(oneitem);
-                              });
-                            },
-                            icon: Icon(Icons.close))
-                      ]),
-                    ));
+                          SizedBox(
+                            width: 10,
+                          ),
+                          SizedBox(
+                            width: 220,
+                            child: Text(
+                              oneitem[1],
+                              style: GoogleFonts.poppins(),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 30,
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  searchitems.remove(oneitem);
+                                });
+                              },
+                              icon: Icon(Icons.close))
+                        ]),
+                      )),
+                );
               }).toList(),
             ),
           ),
@@ -527,7 +559,7 @@ class _SearchState extends State<Search> {
 //                         itemBuilder: (BuildContext context, index) {
 //                           // var data = itemlist.items[index];
 //                           myFunc() {
-                        
+
 //                           }
 
 //                           return Card(
