@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pixzzaapp/HomePage.dart';
-import 'package:pixzzaapp/Search.dart';
-import 'package:pixzzaapp/likes.dart';
+import 'package:pixzzaapp/Screens/HomePage.dart';
+import 'package:pixzzaapp/Screens/Search.dart';
+import 'package:pixzzaapp/Screens/likes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 class navigationcustom extends StatefulWidget {
   const navigationcustom({super.key});

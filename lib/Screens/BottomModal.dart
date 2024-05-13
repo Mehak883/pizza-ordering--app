@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:pixzzaapp/AddressPage.dart';
+import 'package:pixzzaapp/Screens/AddressPage.dart';
 import 'package:pixzzaapp/Provider/CartProv.dart';
-import 'package:pixzzaapp/cart.dart';
+import 'package:pixzzaapp/Screens/cart.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 

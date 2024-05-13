@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pixzzaapp/Provider/CartProv.dart';
 import 'package:pixzzaapp/Provider/HomeProv.dart';
 import 'package:pixzzaapp/Provider/LikesProv.dart';
-import 'package:pixzzaapp/cart.dart';
+import 'package:pixzzaapp/Screens/cart.dart';
 import 'package:provider/provider.dart';
 // import 'package:carousel_indicator/carousel_indicator.dart';
 

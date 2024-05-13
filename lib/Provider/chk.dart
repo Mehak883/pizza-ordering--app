@@ -6,7 +6,6 @@ Future<void> main() async {
     [1, 'fidid'],
     [2, 'ghjkk']
   ];
-  print();
   Map<DateTime, dynamic> m = {};
   m[DateTime.now()] = a;
   // await Future.delayed(Duration(seconds: 5));

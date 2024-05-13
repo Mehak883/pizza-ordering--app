@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pixzzaapp/BottomModal.dart';
+import 'package:pixzzaapp/Screens/BottomModal.dart';
 import 'package:pixzzaapp/Provider/CartProv.dart';
-import 'package:pixzzaapp/order.dart';
+import 'package:pixzzaapp/Screens/order.dart';
 import 'package:provider/provider.dart';
 
 class cart extends StatefulWidget {

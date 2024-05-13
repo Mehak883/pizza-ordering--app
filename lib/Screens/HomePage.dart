@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pixzzaapp/Provider/HomeProv.dart';
-import 'package:pixzzaapp/order.dart';
-import 'package:pixzzaapp/cart.dart';
+import 'package:pixzzaapp/Screens/order.dart';
+import 'package:pixzzaapp/Screens/cart.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class PizzaDetails {

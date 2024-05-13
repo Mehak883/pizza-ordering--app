@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pixzzaapp/HomePage.dart';
+import 'package:pixzzaapp/Screens/HomePage.dart';
 import 'package:pixzzaapp/Provider/CartProv.dart';
 import 'package:pixzzaapp/Provider/LikesProv.dart';
 import 'package:pixzzaapp/Provider/OrderProv.dart';
-import 'package:pixzzaapp/navigationcustom.dart';
+import 'package:pixzzaapp/Screens/navigationcustom.dart';
 import 'package:provider/provider.dart';
 // import 'package:flutter_native_splash/flutter_native_splash.dart';
 // import 'package:flutter_native_splash/flutter_native_splash.dart';

@@ -6,10 +6,7 @@ class PizzaDetails {
   final String Pdesp;
   final Color Ccolor;
   final int price;
-  int pprice=0;
-
   final int id;
-
   PizzaDetails(
-      this.Pimage, this.Pname, this.Pdesp, this.Ccolor, this.price, this.id);
+    this.Pimage, this.Pname, this.Pdesp, this.Ccolor, this.price, this.id);
 }

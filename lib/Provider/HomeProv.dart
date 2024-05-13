@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pixzzaapp/model.dart';
+import 'package:pixzzaapp/Model/model.dart';
 
 class HomeProv{
   List<PizzaDetails> _pd = <PizzaDetails>[
