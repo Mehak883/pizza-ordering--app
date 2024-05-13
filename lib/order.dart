@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pixzzaapp/Provider/CartProv.dart';
+import 'package:pixzzaapp/Provider/HomeProv.dart';
 import 'package:pixzzaapp/Provider/LikesProv.dart';
 import 'package:pixzzaapp/cart.dart';
 import 'package:provider/provider.dart';
@@ -11,19 +13,16 @@ import 'package:provider/provider.dart';
 // import 'package:cupertino_icons/cupertino_icons.dart';
 
 class order extends StatefulWidget {
-  order(
-      {required this.Pdesp,
-      required this.Pimage,
-      required this.Pname,
-      required this.Pprice});
-  String Pname;
-  String Pdesp;
-  String Pimage;
-  int Pprice;
+  order({required this.id});
+  HomeProv hp = HomeProv();
   int sml = 0;
+  int id;
   @override
-  State<order> createState() =>
-      _orderState(Pname: Pname, Pdesp: Pdesp, Pimage: Pimage, Pprice: Pprice);
+  State<order> createState() => _orderState(
+      Pname: hp.pd[id].Pname,
+      Pdesp: hp.pd[id].Pdesp,
+      Pimage: hp.pd[id].Pimage,
+      Pprice: hp.pd[id].price);
 }
 
 class _orderState extends State<order> {
@@ -40,6 +39,7 @@ class _orderState extends State<order> {
     lpizza = (Pprice * 3) - 15;
     price = Pprice;
   }
+  int flag = 0;
   String Pname;
   int price = 0;
   String Pdesp;
@@ -417,104 +417,49 @@ class _orderState extends State<order> {
                     //       style: GoogleFonts.poppins(
                     //           fontSize: 20, color: Colors.white),)),),
                     SizedBox(
-                      width: 370,
-                      height: 55,
-                      //   child: AddToCartButton(
-                      //     // trolley: SvgPicture.asset(
-                      //     //   'images/shopping-bag.svg',
-                      //     //   width: 24,
-                      //     //   height: 24,
-                      //     //   color: Color.fromARGB(255, 255, 255, 255),
-                      //     // ),
-                      //     trolley: Icon(
-                      //       Icons.shopping_cart_outlined,
-                      //       color: Colors.white,
-                      //       size: 25,
-                      //     ),
-                      //     text: Text(
-                      //       'Add to cart',
-                      //       textAlign: TextAlign.center,
-                      //       style: GoogleFonts.poppins(
-                      //           fontSize: 20, color: Colors.white),
-                      //       maxLines: 1,
-                      //       overflow: TextOverflow.fade,
-                      //     ),
-                      //     check: SizedBox(
-                      //       width: 48,
-                      //       height: 48,
-                      //       child: Icon(
-                      //         Icons.check,
-                      //         color: Colors.white,
-                      //         size: 24,
-                      //       ),
-                      //     ),
-                      //     borderRadius: BorderRadius.circular(30),
-                      //     backgroundColor: Color.fromARGB(255, 65, 48, 79),
-                      //     onPressed: (id) {
-                      //       if (id == AddToCartButtonStateId.idle) {
-                      //         //handle logic when pressed on idle state button.
-                      //         setState(() {
-                      //           stateId = AddToCartButtonStateId.loading;
-                      //           Future.delayed(Duration(seconds: 3), () {
-                      //             setState(() {
-                      //               stateId = AddToCartButtonStateId.done;
-                      //             });
-                      //           });
-                      //         });
-                      //       } else if (id == AddToCartButtonStateId.done) {
-                      //         //handle logic when pressed on done state button.
-                      //         setState(() {
-                      //           stateId = AddToCartButtonStateId.idle;
-                      //         });
-                      //       }
-                      //       cart.cartItems.add([
-                      //         Pname,
-                      //         Pimage,
-                      //         Pdesp,
-                      //         Pprice * quantity,
-                      //         quantity
-                      //       ]);
-                      //     },
-                      //     stateId: stateId,
-                      //   ),
-                      // )
-                      child: ElevatedButton(
-                          onPressed: () {
-                            cart.cartItems.add([
-                              Pname,
-                              Pimage,
-                              Pdesp,
-                              Pprice * quantity,
-                              quantity
-                            ]);
-                            setState(() {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                      backgroundColor: Colors.green,
-                                      content: Text(
-                                        "Item Added Successfully 🙂",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: 'Urbanist-Italic'),
-                                      )));
-                              // ););
-                            });
+                        width: 370,
+                        height: 55,
+                        child: Consumer<CartProv>(
+                          builder: (context, value, child) {
+                            return ElevatedButton(
+                                onPressed: () {
+                                  value.addItem([
+                                    Pname,
+                                    Pimage,
+                                    Pdesp,
+                                    Pprice * quantity,
+                                    quantity
+                                  ]);
+
+                                  print(value.cartItems);
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                          backgroundColor: Colors.green,
+                                          content: Text(
+                                            "Item Added Successfully 🙂",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w500,
+                                                fontFamily: 'Urbanist-Italic'),
+                                          )));
+                                  // ););
+                                },
+                                child: Text(
+                                  'Add to Cart',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 15, horizontal: 130),
+                                  backgroundColor:
+                                      Color.fromARGB(255, 65, 48, 79),
+                                ));
                           },
-                          child: Text(
-                            'Add to Cart',
-                            style: GoogleFonts.poppins(
-                                fontSize: 18,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 130),
-                            backgroundColor: Color.fromARGB(255, 65, 48, 79),
-                          )),
-                    )
+                        ))
                   ],
                 ),
               ),
@@ -541,13 +486,6 @@ class _orderState extends State<order> {
                   });
                 },
               ),
-              // child: Hero(
-              //   tag: '24',
-              //   child: Image.asset(
-              //     "images/pizza-png-15.png",
-              //     fit: BoxFit.contain,
-              //   ),
-              // ),
             ),
           ),
           //  SizedBox(height: 0,),
@@ -600,7 +538,12 @@ class _orderState extends State<order> {
               child: Consumer<LikesProv>(builder: (context, value, child) {
                 return GestureDetector(
                   onTap: () {
-                    
+                    if (value.getItem(widget.id) == false) {
+                      value.addItem(widget.id);
+                    } else {
+                      value.removeItem(value.getId(widget.id));
+                    }
+                    print(value.favItem);
                   },
                   child: Container(
                     height: 55,
@@ -609,12 +552,19 @@ class _orderState extends State<order> {
                         shape: BoxShape.circle,
                         color: Color.fromARGB(255, 65, 48, 79)),
                     child: Center(
-                        child: SvgPicture.asset(
-                      "images/fav.svg",
-                      height: 25,
-                      width: 25,
-                      color: Colors.white,
-                    )
+                        child: value.getItem(widget.id) == false
+                            ? SvgPicture.asset(
+                                "images/fav.svg",
+                                height: 25,
+                                width: 25,
+                                color: Colors.white,
+                              )
+                            : SvgPicture.asset(
+                                "images/favin.svg",
+                                height: 30,
+                                width: 30,
+                                color: Colors.white,
+                              )
                         // fit: BoxFit.contain,
                         ),
                   ),

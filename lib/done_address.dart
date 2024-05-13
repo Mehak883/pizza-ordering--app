@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'package:pixzzaapp/Provider/CartProv.dart';
+import 'package:pixzzaapp/Provider/OrderProv.dart';
 import 'package:pixzzaapp/navigationcustom.dart';
+import 'package:provider/provider.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +24,7 @@ order_address(BuildContext context, String addr) {
 
 class done_address extends StatefulWidget {
   done_address({required this.addr});
-  List<dynamic> cartItems = cart.cartItems;
+  // List<dynamic> cartItems = cart.cartItems;
   String addr;
 
   @override
@@ -71,31 +74,30 @@ class _done_addressState extends State<done_address> {
               ]),
 
               actions: [
-                TextButton(
-                    onPressed: () {
-                      print('hi');
-                      setState(() {
-                        ani = true;
-                        print(ani);
-                      });
-                      showmess();
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (BuildContext context) {
-                      //   return cart();
-                      // }));
-                    },
-                    child: Text(
-                      'Place order',
-                      style: GoogleFonts.poppins(
-                          fontSize: 20,
-                          color: Color.fromRGBO(65, 48, 79, 1),
-                          fontWeight: FontWeight.w500),
-                    ))
+                Consumer<CartProv>(builder: (context, value, child) {
+                  return Consumer<OrderProv>(builder: (context, op, child) {
+                    return TextButton(
+                        onPressed: () {
+                          op.addall(value.cartItems);
+                          print(op.orderMap);
+                          // print('hi');
+                          setState(() {
+                            ani = true;
+                            print(ani);
+                          });
+                          value.removeAll();
+                          showmess();
+                        },
+                        child: Text(
+                          'Place order',
+                          style: GoogleFonts.poppins(
+                              fontSize: 20,
+                              color: Color.fromRGBO(65, 48, 79, 1),
+                              fontWeight: FontWeight.w500),
+                        ));
+                  });
+                })
               ],
-              // cancelButton: TextButton(
-              //   child: Text('fg'),
-              //   onPressed: () {},
-              // ),
             ),
           ),
         ),
@@ -130,7 +132,10 @@ showorderdialog(BuildContext context) {
       //     pathParameters: {'flag': 'true', 'pad': '20'});
     },
     onCancelBtnTap: () {
-      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>navigationcustom()));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => navigationcustom()));
       // GoRouter.of(context).pushNamed(Routers.navigation.name);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: Color.fromRGBO(65, 48, 79, 1),

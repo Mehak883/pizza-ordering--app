@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:pixzzaapp/AddressPage.dart';
+import 'package:pixzzaapp/Provider/CartProv.dart';
 import 'package:pixzzaapp/cart.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 order_placed(BuildContext context, int itemqty, int tPrice) {
   showCupertinoModalPopup(
@@ -16,7 +18,7 @@ order_placed(BuildContext context, int itemqty, int tPrice) {
 
 class BottomModal extends StatefulWidget {
   BottomModal({required this.itemqty, required this.tPrice});
-  List<dynamic> cartItems = cart.cartItems;
+  // List<dynamic> cartItems = cart.cartItems;
   int itemqty, tPrice;
 
   @override
@@ -42,21 +44,22 @@ class _BottomModalState extends State<BottomModal> {
               message: Column(children: [
                 SizedBox(
                   height: 300,
-                  child: ListView.builder(
+                  child:Consumer<CartProv>(builder: (context, value, child) {return
+                ListView.builder(
                     itemBuilder: (BuildContext context, index) {
                       return Padding(
                           padding: const EdgeInsets.only(bottom: 10),
                           child: Material(
                               child: ListTile(
                             leading: Image(
-                                image: AssetImage(cart.cartItems[index][1])),
-                            title: Text(cart.cartItems[index][0]),
-                            subtitle: Text(cart.cartItems[index][2],
+                                image: AssetImage(value.cartItems[index][1])),
+                            title: Text(value.cartItems[index][0]),
+                            subtitle: Text(value.cartItems[index][2],
                                 maxLines: 2, overflow: TextOverflow.ellipsis),
                             trailing: Column(
                               children: [
                                 Text(
-                                  '${cart.cartItems[index][4]} Quantity',
+                                  '${value.cartItems[index][4]} Quantity',
                                   style: GoogleFonts.poppins(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
@@ -64,7 +67,7 @@ class _BottomModalState extends State<BottomModal> {
                                 ),
 
                                 Text(
-                                  '\$${cart.cartItems[index][3]}',
+                                  '\$${value.cartItems[index][3]}',
                                   style: TextStyle(
                                       fontSize: 23, color: Colors.black),
                                 )
@@ -75,8 +78,8 @@ class _BottomModalState extends State<BottomModal> {
                             ),
                           )));
                     },
-                    itemCount: widget.cartItems.length,
-                  ),
+                    itemCount: value.cartItems.length,
+                  );})
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

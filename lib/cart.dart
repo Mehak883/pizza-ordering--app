@@ -1,31 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pixzzaapp/BottomModal.dart';
+import 'package:pixzzaapp/Provider/CartProv.dart';
 import 'package:pixzzaapp/order.dart';
+import 'package:provider/provider.dart';
 
 class cart extends StatefulWidget {
   const cart({super.key});
-  static List cartItems = [];
+  // static List cartItems = [];
   @override
   State<cart> createState() => _cartState();
 }
 
 class _cartState extends State<cart> {
+  CartProv cp = CartProv();
   double tPrice = 0;
   double itemqty = 0;
+  
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < cart.cartItems.length; i++) {
-      tPrice = tPrice + cart.cartItems[i][3];
-      itemqty = itemqty + cart.cartItems[i][4];
+    final crp = Provider.of<CartProv>(context, listen: false);
+    
+    for (int i = 0; i < crp.cartItems.length; i++) {
+      tPrice = tPrice + crp.cartItems[i][3];
+      itemqty = itemqty + crp.cartItems[i][4];
     }
-
     print(tPrice);
   }
-
+ 
   @override
   Widget build(BuildContext context) {
+    final crp = Provider.of<CartProv>(context, listen: true);
+    // for (int i = 0; i < crp.cartItems.length; i++) {
+    //   tPrice = tPrice + crp.cartItems[i][3];
+    //   itemqty = itemqty + crp.cartItems[i][4];
+    // }
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -36,7 +46,7 @@ class _cartState extends State<cart> {
               color: Color.fromARGB(255, 65, 48, 79)),
         ),
         actions: [
-          cart.cartItems.length != 0
+          crp.cartItems.length != 0
               ? IconButton(
                   onPressed: () {},
                   icon: Icon(
@@ -51,7 +61,7 @@ class _cartState extends State<cart> {
               padding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
               child: Column(
                 children: [
-                  cart.cartItems.length == 0
+                  crp.cartItems.length == 0
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -127,79 +137,86 @@ class _cartState extends State<cart> {
                                             )))
                                         ],
                                       ),
-                                 
                                   ]))
                             ])
                       : SingleChildScrollView(
                           child: Column(children: [
                           SizedBox(
                             height: 680,
-                            child: ListView.builder(
-                              itemBuilder: (context, index) {
-                                final item = cart.cartItems[index];
-                                return Dismissible(
-                                    direction: DismissDirection.horizontal,
+                            child: Consumer<CartProv>(
+                                builder: (context, value, child) {
 
-                                    // Each Dismissible must contain a Key. Keys allow Flutter to
-                                    // uniquely identify widgets.
-                                    key: Key(item.toString()),
-                                    // Provide a function that tells the app
-                                    // what to do after an item has been swiped away.
-                                    onDismissed: (direction) {
-                                      // Remove the item from the data source.
-                                      setState(() {
-                                        tPrice =
-                                            tPrice - cart.cartItems[index][3];
-                                        itemqty =
-                                            itemqty - cart.cartItems[index][4];
-                                        cart.cartItems.removeAt(index);
-                                      });
+                              return ListView.builder(
+                                itemBuilder: (context, index) {
+                                  final item = value.cartItems[index];
+                                  return Dismissible(
+                                      direction: DismissDirection.horizontal,
 
-                                      // Then show a snackbar.
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                              content: Text('Item Removed')));
-                                    },
-                                    // Show a red background as the item is swiped away.
-                                    background: Container(
-                                        color: Color.fromRGBO(65, 48, 79, 1)),
-                                    child: Padding(
-                                        padding: EdgeInsets.only(bottom: 10),
-                                        child: ListTile(
-                                          leading: Image(
-                                              image: AssetImage(
-                                                  cart.cartItems[index][1])),
-                                          title: Text(cart.cartItems[index][0]),
-                                          subtitle: Text(
-                                              cart.cartItems[index][2],
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis),
-                                          trailing: Column(
-                                            children: [
-                                              Text(
-                                                '${cart.cartItems[index][4]} Quantity',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Color.fromARGB(
-                                                        255, 0, 0, 0)),
-                                              ),
+                                      // Each Dismissible must contain a Key. Keys allow Flutter to
+                                      // uniquely identify widgets.
+                                      key: Key(item.toString()),
+                                      // Provide a function that tells the app
+                                      // what to do after an item has been swiped away.
+                                      onDismissed: (direction) {
+                                        // Remove the item from the data source.
+                                          tPrice = tPrice -
+                                              value.cartItems[index][3];
+                                          itemqty = itemqty -
+                                              value.cartItems[index][4];
+                                          value.removeItem(index);
+                                  
+                                        // Then show a snackbar.
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: Text('Item Removed')));
+                                                // setState(() {
+                                                  
+                                                // });
+                                      },
+                                      // Show a red background as the item is swiped away.
+                                      background: Container(
+                                          color: Color.fromRGBO(65, 48, 79, 1)),
+                                      child: Padding(
+                                          padding: EdgeInsets.only(bottom: 10),
+                                          child: ListTile(
+                                            leading: Image(
+                                                image: AssetImage(
+                                                    value.cartItems[index][1])),
+                                            title:
+                                                Text(value.cartItems[index][0]),
+                                            subtitle: Text(
+                                                value.cartItems[index][2],
+                                                maxLines: 2,
+                                                overflow:
+                                                    TextOverflow.ellipsis),
+                                            trailing: Column(
+                                              children: [
+                                                Text(
+                                                  '${value.cartItems[index][4]} Quantity',
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Color.fromARGB(
+                                                          255, 0, 0, 0)),
+                                                ),
 
-                                              Text(
-                                                '\$${cart.cartItems[index][3]}',
-                                                style: TextStyle(
-                                                    fontSize: 23,
-                                                    color: Colors.black),
-                                              )
-                                              // ])
-                                              // ]
-                                              //   )
-                                            ],
-                                          ),
-                                        )));
-                              },
-                              itemCount: cart.cartItems.length,
-                            ),
+                                                Text(
+                                                  '\$${value.cartItems[index][3]}',
+                                                  style: TextStyle(
+                                                      fontSize: 23,
+                                                      color: Colors.black),
+                                                )
+                                                // ])
+                                                // ]
+                                                //   )
+                                              ],
+                                            ),
+                                          )));
+                                },
+                                itemCount: value.cartItems.length,
+                              );
+                            }),
                           ),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -216,7 +233,8 @@ class _cartState extends State<cart> {
                                 ]),
                                 ElevatedButton(
                                     onPressed: () {
-                                      order_placed(context,itemqty.toInt(),tPrice.toInt());
+                                      order_placed(context, itemqty.toInt(),
+                                          tPrice.toInt());
                                       // showModalBottomSheet(
                                       //     context: context,
                                       //     isDismissible: true,

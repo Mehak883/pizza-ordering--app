@@ -101,6 +101,7 @@ flutter:
     - images/empty_cart.png
     - images/empty-cart.webp
     - images/lottie_ani.json
+    - images/favin.svg
 
     # - images/pizza3.webp
     # - images/pizz4.jpg

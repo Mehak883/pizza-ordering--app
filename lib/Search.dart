@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pixzzaapp/Provider/HomeProv.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
@@ -65,6 +66,7 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
+  HomeProv hp = HomeProv();
   List searchitems = <dynamic>[
     ['images/pizza-png-15.png', 'Canadian Pizza', '20', false],
     ['images/pizza-png-15.png', 'Baby Corn Pizza', '30', false],
@@ -192,140 +194,126 @@ class _SearchState extends State<Search> {
                             SizedBox(
                                 height: 300,
                                 width: 510,
-                                child: Consumer<LikesProv>(
-                                    builder: (context, value, child) {
-                                  return ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: value.favItem.length,
-                                    itemBuilder: (BuildContext context, index) {
-                                      // var data = itemlist.items[index];
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: hp.pd.length,
+                                  itemBuilder: (BuildContext context, index) {
+                                    // var data = itemlist.items[index];
 
-                                      return Card(
-                                        color: Colors.white,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 0),
-                                          child: SizedBox(
-                                            width: 200,
-                                            child: Column(
-                                              children: [
-                                                SizedBox(
-                                                  height: 15,
-                                                ),
-                                                SizedBox(
-                                                    height: 150,
-                                                    child: Hero(
-                                                        tag: index,
-                                                        child: Image.asset(
-                                                            value.favItem[index]
-                                                                [0]))),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 5,
-                                                          right: 5,
-                                                          left: 5),
-                                                  child: Text(
-                                                    value.favItem[index][1],
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 18,
-                                                      color: Color.fromARGB(
-                                                          255, 65, 48, 79),
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                    maxLines: 1,
+                                    return Card(
+                                      color: Colors.white,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 0),
+                                        child: SizedBox(
+                                          width: 200,
+                                          child: Column(
+                                            children: [
+                                              SizedBox(
+                                                height: 15,
+                                              ),
+                                              SizedBox(
+                                                  height: 150,
+                                                  child: Hero(
+                                                      tag: index,
+                                                      child: Image.asset(hp
+                                                          .pd[index].Pimage))),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 5, right: 5, left: 5),
+                                                child: Text(
+                                                  hp.pd[index].Pname,
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 18,
+                                                    color: Color.fromARGB(
+                                                        255, 65, 48, 79),
+                                                    fontWeight: FontWeight.w600,
                                                   ),
+                                                  maxLines: 1,
                                                 ),
-                                                Padding(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      10, 10, 10, 0),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        '\$${value.favItem[index][2]}',
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    10, 10, 10, 0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      '\$${hp.pd[index].price}',
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                              fontSize: 20,
+                                                              color: const Color
+                                                                  .fromRGBO(
+                                                                  0, 0, 0, 1)),
+                                                    ),
+                                                    Consumer<LikesProv>(
+                                                      builder: (context, value,
+                                                          child) {
+                                                        return GestureDetector(
+                                                          onTap: (){
+                                                            if (value.getItem(index)==false) {
+                      value.addItem(index);
+                    } else {
+
+                      value.removeItem(value.getId(index));
+                    }
+                    print(value.favItem);
+                                                          },
+                                                          child: Icon(
+                                                            value.getItem(index)                                                        
+                                                                ? Icons
+                                                                    .favorite_rounded
+                                                                : Icons
+                                                                    .favorite_outline_rounded,
+                                                            size: 22,
+                                                            color: value.getItem(index) 
+                                                                ? Colors.red
+                                                                : Colors.black,
+                                                          ),
+                                                        );
+                                                      },
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: 0),
+                                                  child: ElevatedButton(
+                                                      onPressed: () {},
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                              backgroundColor:
+                                                                  Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          65,
+                                                                          48,
+                                                                          79),
+                                                              padding: EdgeInsets
+                                                                  .symmetric(
+                                                                      horizontal:
+                                                                          30,
+                                                                      vertical:
+                                                                          0)),
+                                                      child: Text(
+                                                        'Order Now',
                                                         style:
                                                             GoogleFonts.poppins(
-                                                                fontSize: 20,
-                                                                color: const Color
-                                                                    .fromRGBO(0,
-                                                                    0, 0, 1)),
-                                                      ),
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            // if(value.favItem.contains(index)==true){
-
-                                                            // }
-                                                            if (value.favItem[
-                                                                    index][3] ==
-                                                                true) {
-                                                              value.dislikeItem(
-                                                                  index);
-                                                            } else {
-                                                              value.likeItem(
-                                                                  index);
-                                                            }
-                                                            print(value.favItem);
-                                                            
-                                                            
-                                                           });
-                                                          // print(widget.favItem);
-                                                        },
-                                                        child: Icon(
-                                                          value.favItem[index]
-                                                                  [3]
-                                                              ? Icons
-                                                                  .favorite_rounded
-                                                              : Icons
-                                                                  .favorite_outline_rounded,
-                                                          size: 22,
-                                                          color: value.favItem[
-                                                                  index][3]
-                                                              ? Colors.red
-                                                              : Colors.black,
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                                Padding(
-                                                    padding:
-                                                        EdgeInsets.only(top: 0),
-                                                    child: ElevatedButton(
-                                                        onPressed: () {},
-                                                        style: ElevatedButton.styleFrom(
-                                                            backgroundColor:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    65,
-                                                                    48,
-                                                                    79),
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        30,
-                                                                    vertical:
-                                                                        0)),
-                                                        child: Text(
-                                                          'Order Now',
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 15),
-                                                        ))),
-                                              ],
-                                            ),
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 15),
+                                                      ))),
+                                            ],
                                           ),
                                         ),
-                                      );
-                                    },
-                                  );
-                                })),
+                                      ),
+                                    );
+                                  },
+                                )),
                           ]))
                 ],
               )),

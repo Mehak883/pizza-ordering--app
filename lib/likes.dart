@@ -13,10 +13,6 @@ class likes extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-              // actions: [Padding(
-              //   padding: const EdgeInsets.only(right: 10),
-              //   child: Icon(Icons.favorite,color: Colors.red,size: 28,),
-              // )],
               title: Text('Your Favourites',
                   style: GoogleFonts.poppins(fontSize: 26)),
             ),
@@ -26,11 +22,12 @@ class likes extends StatelessWidget {
                 child: ListView.builder(
                   itemBuilder: (context, index) {
                     final item = value.favItem[index];
-                    return value.favItem[index][3]==true?Dismissible(
+                    return Dismissible(
                         direction: DismissDirection.horizontal,
                         key: Key(item.toString()),
                         onDismissed: (direction) {
-                          value.dislikeItem(index);
+                          value.removeItem(index);
+                          print(value.favItem);
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Item Unliked')));
                         },
@@ -40,9 +37,9 @@ class likes extends StatelessWidget {
                             padding: EdgeInsets.only(bottom: 10),
                             child: ListTile(
                               leading: Image(
-                                  image: AssetImage(value.favItem[index][0])),
-                              title: Text(value.favItem[index][1]),
-                              subtitle: Text(value.favItem[index][4],
+                                  image: AssetImage(value.favItem[index][3])),
+                              title: Text(value.favItem[index][4]),
+                              subtitle: Text(value.favItem[index][1],
                                   maxLines: 2, overflow: TextOverflow.ellipsis),
                               trailing: Column(
                                 children: [
@@ -56,7 +53,7 @@ class likes extends StatelessWidget {
                                   //)
                                 ],
                               ),
-                            ))):SizedBox();
+                            )));
                   },
                   itemCount: value.favItem.length,
                 ),

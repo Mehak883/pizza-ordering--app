@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pixzzaapp/HomePage.dart';
+import 'package:pixzzaapp/Provider/CartProv.dart';
 import 'package:pixzzaapp/Provider/LikesProv.dart';
+import 'package:pixzzaapp/Provider/OrderProv.dart';
 import 'package:pixzzaapp/navigationcustom.dart';
 import 'package:provider/provider.dart';
 // import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -19,7 +21,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (_)=>LikesProv())
+      ChangeNotifierProvider(create: (_)=>LikesProv()),
+      ChangeNotifierProvider(create: (_)=>CartProv()),
+      ChangeNotifierProvider(create: (_)=>OrderProv())
     ],
     child:
     MaterialApp(
